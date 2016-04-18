@@ -13,6 +13,38 @@ export default EmberUploader.FileField.extend({
       hoursAdc:   'AA8',
       hoursEsp:   'AA10',
       hoursExt:   'AA9'
+    },
+    'A.P.EX.02.01 - Rev 10.3 - CARVAO' : {
+      driverName: 'G6',
+      startDate:  'G9',
+      finalDate:  'M9',
+      hoursAdc:   'AB8',
+      hoursEsp:   'AB10',
+      hoursExt:   'AB9'
+    },
+    'Rev 9' : {
+      driverName: 'G6',
+      startDate:  'G9',
+      finalDate:  'M9',
+      hoursAdc:   'X8',
+      hoursEsp:   'X10',
+      hoursExt:   'X9'
+    },
+    'A.P.EX.02.01 - Rev 8 - RODOVIARIO' : {
+      driverName: 'H6',
+      startDate:  'H9',
+      finalDate:  'L9',
+      hoursAdc:   'V8',
+      hoursEsp:   'V10',
+      hoursExt:   'V9'
+    },
+    'A.P.EX.02.01 - Rev 8 - CARVAO' : {
+      driverName: 'G6',
+      startDate:  'G9',
+      finalDate:  'L9',
+      hoursAdc:   'V8',
+      hoursEsp:   'V10',
+      hoursExt:   'V8'
     }
   },
 
@@ -20,7 +52,7 @@ export default EmberUploader.FileField.extend({
     var j, len, workbook, self = this;
 
     //TODO: REMOVE
-    console.log(this.get('cellMaps'));
+    //console.log(this.get('cellMaps'));
 
     this.set('sheetsData', Ember.A());
 
@@ -33,15 +65,23 @@ export default EmberUploader.FileField.extend({
         workbook = XLSX.read(e.target.result, {type: 'binary'});
 
         //TODO: REMOVE
-        console.log('Sheet '+e.target.fileName);
-        console.log(workbook);
+        //console.log('Sheet '+e.target.fileName);
+        //console.log(workbook);
 
         var version = workbook.Props.Title;
+        if (version === undefined) {
+          if (workbook.Sheets['JORNADA DE MOTORISTA']['G6'] === undefined) {
+            version = 'A.P.EX.02.01 - Rev 8 - RODOVIARIO';
+          } else {
+            version = 'A.P.EX.02.01 - Rev 8 - CARVAO';
+          }
+        }
+
         var cellMap = self.get('cellMaps')[version];
 
         if (cellMap === undefined) {
           //TODO
-          alert('Versão da Planilha não Cadastrada: "'+version+'"');
+          alert('Versão da Planilha "'+version+'" não Cadastrada: '+e.target.fileName);
         } else {
           var data = {
             fileName: e.target.fileName,
@@ -57,12 +97,12 @@ export default EmberUploader.FileField.extend({
           self.sheetsData.pushObject(data);
 
           //TODO: REMOVE
-          console.log(data);
+          //console.log(data);
         }
 
         //TODO: REMOVE
-        console.log('-------------------- END');
-      }
+        //console.log('-------------------- END');
+      };
       reader.readAsBinaryString(file);
 
     }

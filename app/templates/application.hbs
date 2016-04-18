@@ -27,8 +27,8 @@
         <td>{{sheet.driverName}}</td>
         <td>{{sheet.fileName}}</td>
         <td>{{sheet.version}}</td>
-        <td>{{sheet.startDate}}</td>
-        <td>{{sheet.finalDate}}</td>
+        <td>{{moment-format sheet.startDate 'DD/MM/YYYY' 'M/D/YYYY'}}</td>
+        <td>{{moment-format sheet.finalDate 'DD/MM/YYYY' 'M/D/YYYY'}}</td>
         <td>{{formatHours sheet.hoursAdc}}</td>
         <td>{{formatHours sheet.hoursEsp}}</td>
         <td>{{formatHours sheet.hoursExt}}</td>
