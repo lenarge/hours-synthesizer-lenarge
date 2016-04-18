@@ -49,9 +49,9 @@ export default EmberUploader.FileField.extend({
             driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
             startDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.startDate].w,
             finalDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.finalDate].w,
-            hoursAdc:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].w,
-            hoursEsp:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].w,
-            hoursExt:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].w
+            hoursAdc:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].v,
+            hoursEsp:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].v,
+            hoursExt:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].v
           };
 
           self.sheetsData.pushObject(data);
