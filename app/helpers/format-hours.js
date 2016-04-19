@@ -5,7 +5,7 @@ export function formatHours(params/*, hash*/) {
   var hours = Math.floor(days*24);
   var minutes = Math.round(((days*24)-Math.floor(days*24))*60);
 
-  if (minutes == 60) {
+  if (minutes === 60) {
     hours += 1;
     minutes = 0;
   }

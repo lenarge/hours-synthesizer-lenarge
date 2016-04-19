@@ -51,6 +51,51 @@ export default EmberUploader.FileField.extend({
   filesDidChange: function(files) {
     var j, len, workbook, self = this;
 
+    var translateSheet = function(e) {
+      workbook = XLSX.read(e.target.result, {type: 'binary'});
+
+      //TODO: REMOVE
+      //console.log('Sheet '+e.target.fileName);
+      //console.log(workbook);
+
+      var version = workbook.Props.Title;
+      if (version === undefined) {
+        if (workbook.Sheets['JORNADA DE MOTORISTA']['G6'] === undefined) {
+          version = 'A.P.EX.02.01 - Rev 8 - RODOVIARIO';
+        } else {
+          version = 'A.P.EX.02.01 - Rev 8 - CARVAO';
+        }
+      }
+
+      var cellMap = self.get('cellMaps')[version];
+
+      if (cellMap === undefined) {
+        //TODO
+        alert('Versão da Planilha "'+version+'" não Cadastrada: '+e.target.fileName);
+      } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].w === "#VALUE!" || workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].w === "#VALUE!" ||  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].w === "#VALUE!") {
+        alert('Planilha com Erro de Fórmula não importada: '+e.target.fileName);
+      } else {
+        var data = {
+          fileName: e.target.fileName,
+          version:    version,
+          driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
+          startDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.startDate].w,
+          finalDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.finalDate].w,
+          hoursAdc:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].v,
+          hoursEsp:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].v,
+          hoursExt:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].v
+        };
+
+        self.sheetsData.pushObject(data);
+
+        //TODO: REMOVE
+        //console.log(data);
+      }
+
+      //TODO: REMOVE
+      //console.log('-------------------- END');
+    };
+
     //TODO: REMOVE
     //console.log(this.get('cellMaps'));
 
@@ -61,50 +106,7 @@ export default EmberUploader.FileField.extend({
 
       var reader = new FileReader();
       reader.fileName = file.name;
-      reader.onload = function(e) {
-        workbook = XLSX.read(e.target.result, {type: 'binary'});
-
-        //TODO: REMOVE
-        //console.log('Sheet '+e.target.fileName);
-        //console.log(workbook);
-
-        var version = workbook.Props.Title;
-        if (version === undefined) {
-          if (workbook.Sheets['JORNADA DE MOTORISTA']['G6'] === undefined) {
-            version = 'A.P.EX.02.01 - Rev 8 - RODOVIARIO';
-          } else {
-            version = 'A.P.EX.02.01 - Rev 8 - CARVAO';
-          }
-        }
-
-        var cellMap = self.get('cellMaps')[version];
-
-        if (cellMap === undefined) {
-          //TODO
-          alert('Versão da Planilha "'+version+'" não Cadastrada: '+e.target.fileName);
-        } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].w == "#VALUE!" || workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].w == "#VALUE!" ||  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].w == "#VALUE!") {
-          alert('Planilha com Erro de Fórmula não importada: '+e.target.fileName);
-        } else {
-          var data = {
-            fileName: e.target.fileName,
-            version:    version,
-            driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
-            startDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.startDate].w,
-            finalDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.finalDate].w,
-            hoursAdc:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].v,
-            hoursEsp:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].v,
-            hoursExt:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].v
-          };
-
-          self.sheetsData.pushObject(data);
-
-          //TODO: REMOVE
-          //console.log(data);
-        }
-
-        //TODO: REMOVE
-        //console.log('-------------------- END');
-      };
+      reader.onload = translateSheet;
       reader.readAsBinaryString(file);
 
     }
