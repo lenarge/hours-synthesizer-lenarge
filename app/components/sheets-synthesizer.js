@@ -82,6 +82,8 @@ export default EmberUploader.FileField.extend({
         if (cellMap === undefined) {
           //TODO
           alert('Versão da Planilha "'+version+'" não Cadastrada: '+e.target.fileName);
+        } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].w == "#VALUE!" || workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].w == "#VALUE!" ||  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].w == "#VALUE!") {
+          alert('Planilha com Erro de Fórmula não importada: '+e.target.fileName);
         } else {
           var data = {
             fileName: e.target.fileName,
