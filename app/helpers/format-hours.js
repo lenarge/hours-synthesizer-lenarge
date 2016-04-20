@@ -10,7 +10,9 @@ export function formatHours(params/*, hash*/) {
     minutes = 0;
   }
 
-  var formattedHours = ("00"+hours).slice(-2) + ":" + ("00"+minutes).slice(-2);
+  var hoursLength = (hours.toString().length < 2) ? 2 : hours.toString().length;
+
+  var formattedHours = ("00"+hours).slice(-1 * hoursLength) + ":" + ("00"+minutes).slice(-2);
   return formattedHours;
 }
 
