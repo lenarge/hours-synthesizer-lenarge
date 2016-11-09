@@ -95,6 +95,7 @@ export default EmberUploader.FileField.extend({
       }
 
       var cellMap = self.get('cellMaps')[version];
+      var data;
 
       if (cellMap === undefined) {
         //TODO
@@ -104,7 +105,7 @@ export default EmberUploader.FileField.extend({
       } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName] === undefined) {
         alert('Sem Nome do Motorista - Planilha não importada: '+e.target.fileName);
       } else if (cellMap.revVersion > 10) {
-        var data = {
+        data = {
           fileName: e.target.fileName,
           version:    version,
           driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
@@ -119,7 +120,7 @@ export default EmberUploader.FileField.extend({
 
         self.sheetsData.pushObject(data);
       } else {
-        var data = {
+        data = {
           fileName: e.target.fileName,
           version:    version,
           driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
