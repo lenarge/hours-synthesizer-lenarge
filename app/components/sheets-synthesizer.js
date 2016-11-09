@@ -6,7 +6,30 @@ export default EmberUploader.FileField.extend({
   multiple: true,
 
   cellMaps: {
+    'A.P.EX.02.01 - Rev 11 - RODOVIARIO' : {
+      revVersion:   11,
+      driverName:   'H6',
+      startDate:    'H9',
+      finalDate:    'M9',
+      hoursAdc:     'AA8',
+      hoursEsp:     'AA10',
+      hoursExt:     'AA9',
+      daysFinished: 'AF8',
+      daysPendent:  'AF9'
+    },
+    'A.P.EX.02.01 - Rev 11 - CARVAO' : {
+      revVersion:   11,
+      driverName:   'G6',
+      startDate:    'G9',
+      finalDate:    'M9',
+      hoursAdc:     'AB8',
+      hoursEsp:     'AB10',
+      hoursExt:     'AB9',
+      daysFinished: 'AG8',
+      daysPendent:  'AG9'
+    },
     'A.P.EX.02.01 - Rev 10.3 - RODOVIARIO' : {
+      revVersion:  10.3,
       driverName: 'H6',
       startDate:  'H9',
       finalDate:  'M9',
@@ -15,6 +38,7 @@ export default EmberUploader.FileField.extend({
       hoursExt:   'AA9'
     },
     'A.P.EX.02.01 - Rev 10.3 - CARVAO' : {
+      revVersion:  10.3,
       driverName: 'G6',
       startDate:  'G9',
       finalDate:  'M9',
@@ -23,6 +47,7 @@ export default EmberUploader.FileField.extend({
       hoursExt:   'AB9'
     },
     'Rev 9' : {
+      revVersion:  9,
       driverName: 'G6',
       startDate:  'G9',
       finalDate:  'M9',
@@ -31,6 +56,7 @@ export default EmberUploader.FileField.extend({
       hoursExt:   'X9'
     },
     'A.P.EX.02.01 - Rev 8 - RODOVIARIO' : {
+      revVersion:  8,
       driverName: 'H6',
       startDate:  'H9',
       finalDate:  'L9',
@@ -39,6 +65,7 @@ export default EmberUploader.FileField.extend({
       hoursExt:   'V9'
     },
     'A.P.EX.02.01 - Rev 8 - CARVAO' : {
+      revVersion:  8,
       driverName: 'G6',
       startDate:  'G9',
       finalDate:  'L9',
@@ -76,6 +103,21 @@ export default EmberUploader.FileField.extend({
         alert('Erro de Fórmula - Planilha não importada: '+e.target.fileName);
       } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName] === undefined) {
         alert('Sem Nome do Motorista - Planilha não importada: '+e.target.fileName);
+      } else if (cellMap.revVersion > 10) {
+        var data = {
+          fileName: e.target.fileName,
+          version:    version,
+          driverName: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName].v,
+          startDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.startDate].w,
+          finalDate:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.finalDate].w,
+          hoursAdc:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].v,
+          hoursEsp:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].v,
+          hoursExt:   workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].v,
+          daysFinished: workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.daysFinished].v,
+          daysPendent:  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.daysPendent].v
+        };
+
+        self.sheetsData.pushObject(data);
       } else {
         var data = {
           fileName: e.target.fileName,
