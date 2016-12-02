@@ -104,7 +104,7 @@ export default EmberUploader.FileField.extend({
         alert('Erro de Fórmula - Planilha não importada: '+e.target.fileName);
       } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName] === undefined) {
         alert('Sem Nome do Motorista - Planilha não importada: '+e.target.fileName);
-      } else if (cellMap.revVersion > 10) {
+      } else if (cellMap.revVersion >= 11) {
         data = {
           fileName: e.target.fileName,
           version:    version,
