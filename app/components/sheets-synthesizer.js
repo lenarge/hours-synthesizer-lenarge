@@ -8,23 +8,23 @@ export default EmberUploader.FileField.extend({
   cellMaps: {
     'A.P.EX.02.01 - Rev 11 - RODOVIARIO' : {
       revVersion:   11,
-      driverName:   'H6',
-      startDate:    'H9',
-      finalDate:    'M9',
-      hoursAdc:     'AA8',
-      hoursEsp:     'AA10',
-      hoursExt:     'AA9',
+      driverName:   'J6',
+      startDate:    'J9',
+      finalDate:    'O9',
+      hoursAdc:     'AC8',
+      hoursEsp:     'AC10',
+      hoursExt:     'AC9',
       daysFinished: 'AF8',
       daysPendent:  'AF9'
     },
     'A.P.EX.02.01 - Rev 11 - CARVAO' : {
       revVersion:   11,
-      driverName:   'G6',
-      startDate:    'G9',
-      finalDate:    'M9',
-      hoursAdc:     'AB8',
-      hoursEsp:     'AB10',
-      hoursExt:     'AB9',
+      driverName:   'I6',
+      startDate:    'I9',
+      finalDate:    'O9',
+      hoursAdc:     'AD8',
+      hoursEsp:     'AD10',
+      hoursExt:     'AD9',
       daysFinished: 'AG8',
       daysPendent:  'AG9'
     },
@@ -100,7 +100,7 @@ export default EmberUploader.FileField.extend({
       if (cellMap === undefined) {
         //TODO
         alert('Versão da Planilha "'+version+'" não Cadastrada: '+e.target.fileName);
-      } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc].w === "#VALUE!" || workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp].w === "#VALUE!" ||  workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt].w === "#VALUE!") {
+      } else if ((workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursAdc] || {}).w === "#VALUE!" || (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursEsp] || {}).w === "#VALUE!" ||  (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.hoursExt] || {}).w === "#VALUE!") {
         alert('Erro de Fórmula - Planilha não importada: '+e.target.fileName);
       } else if (workbook.Sheets['JORNADA DE MOTORISTA'][cellMap.driverName] === undefined) {
         alert('Sem Nome do Motorista - Planilha não importada: '+e.target.fileName);
