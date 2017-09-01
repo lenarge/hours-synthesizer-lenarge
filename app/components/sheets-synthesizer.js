@@ -11,11 +11,11 @@ export default EmberUploader.FileField.extend({
       driverName:   'J6',
       startDate:    'J9',
       finalDate:    'O9',
-      hoursAdc:     'AC8',
-      hoursEsp:     'AC10',
-      hoursExt:     'AC9',
-      daysFinished: 'AF8',
-      daysPendent:  'AF9'
+      hoursAdc:     'AF8',
+      hoursEsp:     'AF10',
+      hoursExt:     'AF9',
+      daysFinished: 'AI8',
+      daysPendent:  'AI9'
     },
     'A.P.EX.02.01 - Rev 11 - CARVAO' : {
       revVersion:   11,
@@ -29,13 +29,15 @@ export default EmberUploader.FileField.extend({
       daysPendent:  'AG9'
     },
     'A.P.EX.02.01 - Rev 10.3 - RODOVIARIO' : {
-      revVersion:  10.3,
-      driverName: 'H6',
-      startDate:  'H9',
-      finalDate:  'M9',
-      hoursAdc:   'AA8',
-      hoursEsp:   'AA10',
-      hoursExt:   'AA9'
+      revVersion:   12, // bugged version
+      driverName:   'J6',
+      startDate:    'J9',
+      finalDate:    'O9',
+      hoursAdc:     'AF8',
+      hoursEsp:     'AF10',
+      hoursExt:     'AF9',
+      daysFinished: 'AI8',
+      daysPendent:  'AI9'
     },
     'A.P.EX.02.01 - Rev 10.3 - CARVAO' : {
       revVersion:  10.3,
@@ -55,16 +57,7 @@ export default EmberUploader.FileField.extend({
       hoursEsp:   'X10',
       hoursExt:   'X9'
     },
-    'A.P.EX.02.01 - Rev 8 - RODOVIARIO' : {
-      revVersion:  8,
-      driverName: 'H6',
-      startDate:  'H9',
-      finalDate:  'L9',
-      hoursAdc:   'V8',
-      hoursEsp:   'V10',
-      hoursExt:   'V9'
-    },
-    'A.P.EX.02.01 - Rev 8 - CARVAO' : {
+    'A.P.EX.02.01 - Rev S/V - CARVAO' : {
       revVersion:  8,
       driverName: 'G6',
       startDate:  'G9',
@@ -72,6 +65,17 @@ export default EmberUploader.FileField.extend({
       hoursAdc:   'V8',
       hoursEsp:   'V10',
       hoursExt:   'V8'
+    },
+    'A.P.EX.02.01 - Rev S/V - RODOVIARIO' : {
+      revVersion:   11,
+      driverName:   'J6',
+      startDate:    'J9',
+      finalDate:    'O9',
+      hoursAdc:     'AF8',
+      hoursEsp:     'AF10',
+      hoursExt:     'AF9',
+      daysFinished: 'AI8',
+      daysPendent:  'AI9'
     }
   },
 
@@ -82,17 +86,19 @@ export default EmberUploader.FileField.extend({
       workbook = XLSX.read(e.target.result, {type: 'binary'});
 
       //TODO: REMOVE
-      //console.log('Sheet '+e.target.fileName);
-      //console.log(workbook);
+      console.log('Sheet '+e.target.fileName);
+      console.log(workbook);
 
       var version = workbook.Props.Title;
       if (version === undefined) {
         if (workbook.Sheets['JORNADA DE MOTORISTA']['G6'] === undefined) {
-          version = 'A.P.EX.02.01 - Rev 8 - RODOVIARIO';
+          version = 'A.P.EX.02.01 - Rev S/V - RODOVIARIO';
         } else {
-          version = 'A.P.EX.02.01 - Rev 8 - CARVAO';
+          version = 'A.P.EX.02.01 - Rev S/V - CARVAO';
         }
       }
+
+      console.log('Version:', version);
 
       var cellMap = self.get('cellMaps')[version];
       var data;
@@ -134,7 +140,7 @@ export default EmberUploader.FileField.extend({
         self.sheetsData.pushObject(data);
 
         //TODO: REMOVE
-        //console.log(data);
+        console.log(data);
       }
 
       //TODO: REMOVE
