@@ -1,4 +1,5 @@
 /*globals XLSX*/
+
 import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
 
@@ -6,6 +7,17 @@ export default EmberUploader.FileField.extend({
   multiple: true,
 
   cellMaps: {
+    'A.P.EX.02.01 - Rev 12 - RODOVIARIO' : {
+      revVersion:   12,
+      driverName:   'J6',
+      startDate:    'J9',
+      finalDate:    'O9',
+      hoursAdc:     'AF8',
+      hoursEsp:     'AF10',
+      hoursExt:     'AF9',
+      daysFinished: 'AI8',
+      daysPendent:  'AI9'
+    },
     'A.P.EX.02.01 - Rev 11.01 - RODOVIARIO' : {
       revVersion:   11.01,
       driverName:   'J6',
