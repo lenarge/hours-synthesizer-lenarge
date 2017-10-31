@@ -7,6 +7,17 @@ export default EmberUploader.FileField.extend({
   multiple: true,
 
   cellMaps: {
+    'A.P.EX.02.01 - Rev 13- RODOVIARIO' : {
+      revVersion:   13,
+      driverName:   'J6',
+      startDate:    'J9',
+      finalDate:    'O9',
+      hoursAdc:     'AP8',
+      hoursEsp:     'AP10',
+      hoursExt:     'AP9',
+      daysFinished: 'AS8',
+      daysPendent:  'AS9'
+    },
     'A.P.EX.02.01 - Rev 12 - RODOVIARIO' : {
       revVersion:   12,
       driverName:   'J6',
