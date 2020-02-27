@@ -7,6 +7,17 @@ export default EmberUploader.FileField.extend({
   multiple: true,
 
   cellMaps: {
+    "A.P.EX.02.01 - Rev 13.1 - RODOVIARIO": {
+      revVersion: 13.1,
+      driverName: "J6",
+      startDate: "J9",
+      finalDate: "P9",
+      hoursAdc: "AP8",
+      hoursEsp: "AP10",
+      hoursExt: "AP9",
+      daysFinished: "AS8",
+      daysPendent: "AS9"
+    },
     "A.P.EX.02.01 - Rev 13- RODOVIARIO": {
       revVersion: 13,
       driverName: "J6",
@@ -119,8 +130,8 @@ export default EmberUploader.FileField.extend({
       workbook = XLSX.read(e.target.result, { type: "binary" });
 
       //TODO: REMOVE
-      // console.log('Sheet '+e.target.fileName);
-      // console.log(workbook);
+      console.log("Sheet " + e.target.fileName);
+      console.log(workbook);
 
       var version = workbook.Props.Title;
       if (version === undefined) {
@@ -139,10 +150,12 @@ export default EmberUploader.FileField.extend({
         version = "A.P.EX.02.01 - Rev 11.01 - RODOVIARIO";
       }
 
-      // console.log('Version:', version);
+      console.log("Version:", version);
 
       var cellMap = self.get("cellMaps")[version];
       var data;
+
+      console.log("Cell Map:", cellMap);
 
       if (cellMap === undefined) {
         //TODO
@@ -206,7 +219,7 @@ export default EmberUploader.FileField.extend({
         self.sheetsData.pushObject(data);
 
         //TODO: REMOVE
-        // console.log(data);
+        console.log(data);
       }
 
       //TODO: REMOVE
